@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script>
+            var myScore = 0;
+            var opponentScore = 0;
+
+            function computerPlay() {
+                var option = ['rock', 'paper', 'scissors'];
+                return option[Math.floor(Math.random() * option.length)];
+            };
+
+            function playRound(playerSelection, computerSelection) {
+                if (playerSelection == computerSelection) {
+                    return 'Tie!'
+                } else if (playerSelection == 'rock' && computerSelection == 'scissors') {
+                    myScore++;
+                    return 'You win! Your rock beats scissors.'
+                } else if (playerSelection == 'rock' && computerSelection == 'paper') {
+                    opponentScore++;
+                    return 'You lost! Your rock loses to paper.'
+                } else if (playerSelection == 'paper' && computerSelection == 'rock') {
+                    myScore++;
+                    return 'You win! Your paper beats rock.'
+                } else if (playerSelection == 'paper' && computerSelection == 'scissors') {
+                    opponentScore++;
+                    return 'You lost! Your paper loses to scissors. '
+                } else if (playerSelection == 'scissors' && computerSelection == 'rock') {
+                    opponentScore++;
+                    return 'You lost! Your scissors lose to rock.'
+                } else if (playerSelection == 'scissors' && computerSelection == 'paper') {
+                    myScore++;
+                    return 'You win! Your scissors beats paper.'
+                }
+            };
+
+            function game() {
+                var numOfRounds = prompt('choose number of rounds');
+                var currentRound = 0;
+                while (currentRound < numOfRounds) {
+                    var playerSelection = prompt('choose a move!');
+                    var computerSelection = computerPlay();
+                    console.log(playRound(playerSelection, computerSelection));
+                    console.log('Your score: ' + myScore);
+                    console.log('Opponenet score: ' + opponentScore);
+                    currentRound++;
+                };
+                if (myScore > opponentScore) {
+                    console.log ('You win!')
+                } else if (opponentScore > myScore) {
+                    console.log ('You lose')
+                }
+            };
+        </script>
+    </body>
+</html>
