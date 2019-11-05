@@ -1,73 +1,124 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel='stylesheet.css' type=text/css href='stylesheet.css'>
-    </head>
-    <body>
-        <div>
-            <diV>
-                <label for='rock'>Rock</label>
-                <input type="button" name='rock' value='rock'>
-            </div>
-            <diV>
-                <label for='rock'>Paper</label>
-                <input type="button" name='paper' value='paper'>
-            </div>
-            <diV>
-                <label for='rock'>Scissors</label>
-                <input type="button" name='scissors' value='scissors'>
-            </div>
+
+<head>
+    <link rel='stylesheet' type=text/css href='stylesheet.css'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- <div class='keys'>
+        <div data-key='82' class='key'>
+            <kbd>R</kbd>
         </div>
-        <script>
-            var myScore = 0;
-            var opponentScore = 0;
+        <div data-key='80' class='key'>
+            <kbd>P</kbd>
+        </div>
+        <div data-key='83' class='key'>
+            <kbd>S</kbd>
+        </div>
+    </div> -->
+    <div class='scores'>
+        <h1 id='my-score'>Your score: 0</h1>
+        <h1 id='opponent-score'>Opponent score: 0</h1> 
+        <h1 id='game-moves'>No current moves</h1>
+        <h1 id='game-winner'>No winner decided yet</h1>
+    </div>
+    <div class='buttons'>
+        <div>
+            <!-- <button name='start-round' id='start-round' onclick="game()">Start round</button> -->
+        </div>
+        <div>
+            <button class='player-choice' id='rock' value='rock' onclick='playerChoice(this.value); game()'>Rock</button>
+        </div>
+        <div>
+            <button class='player-choice' id='paper' value='paper' onclick='playerChoice(this.value); game()'>Paper</button>
+        </div>
+        <div>
+            <button class='player-choice' id='scissors' value='scissors' onclick='playerChoice(this.value); game()'>Scissors</button>
+        </div>
+        <div>
+            <!-- <label for='rounds'>Rounds: </label> -->
+            <!-- <input type='number' name='rounds' id='rounds' value=''> -->
+        </div>
+    </div>
 
-            function computerPlay() {
-                var option = ['rock', 'paper', 'scissors'];
-                return option[Math.floor(Math.random() * option.length)];
-            };
+    <script>
+        var myScore = 0;
+        var opponentScore = 0;
+        var currentRound = 0;
 
-            function playRound(playerSelection, computerSelection) {
-                if (playerSelection == computerSelection) {
-                    return 'Tie!'
-                } else if (playerSelection == 'rock' && computerSelection == 'scissors') {
-                    myScore++;
-                    return 'You win! Your rock beats scissors.'
-                } else if (playerSelection == 'rock' && computerSelection == 'paper') {
-                    opponentScore++;
-                    return 'You lost! Your rock loses to paper.'
-                } else if (playerSelection == 'paper' && computerSelection == 'rock') {
-                    myScore++;
-                    return 'You win! Your paper beats rock.'
-                } else if (playerSelection == 'paper' && computerSelection == 'scissors') {
-                    opponentScore++;
-                    return 'You lost! Your paper loses to scissors. '
-                } else if (playerSelection == 'scissors' && computerSelection == 'rock') {
-                    opponentScore++;
-                    return 'You lost! Your scissors lose to rock.'
-                } else if (playerSelection == 'scissors' && computerSelection == 'paper') {
-                    myScore++;
-                    return 'You win! Your scissors beats paper.'
-                }
-            };
+        var move = "";
 
-            function game() {
-                var numOfRounds = prompt('choose number of rounds');
-                var currentRound = 0;
-                while (currentRound < numOfRounds) {
-                    var playerSelection = prompt('choose a move!');
-                    var computerSelection = computerPlay();
-                    console.log(playRound(playerSelection, computerSelection));
-                    console.log('Your score: ' + myScore);
-                    console.log('Opponenet score: ' + opponentScore);
-                    currentRound++;
-                };
-                if (myScore > opponentScore) {
-                    console.log ('You win!')
-                } else if (opponentScore > myScore) {
-                    console.log ('You lose')
-                }
-            };
-        </script>
-    </body>
+        function playerChoice(value) {
+            // alert (value);
+            move = value;
+        }
+
+        function computerPlay() {
+            var option = ['rock', 'paper', 'scissors'];
+            return option[Math.floor(Math.random() * option.length)];
+        };
+
+        function playRound(playerSelection, computerSelection) {
+            if (playerSelection == computerSelection) {
+                return 'Tie! No points awarded.'
+            } else if (playerSelection == 'rock' && computerSelection == 'scissors') {
+                myScore++;
+                return 'You win! Your rock beats scissors.'
+            } else if (playerSelection == 'rock' && computerSelection == 'paper') {
+                opponentScore++;
+                return 'You lost! Your rock loses to paper.'
+            } else if (playerSelection == 'paper' && computerSelection == 'rock') {
+                myScore++;
+                return 'You win! Your paper beats rock.'
+            } else if (playerSelection == 'paper' && computerSelection == 'scissors') {
+                opponentScore++;
+                return 'You lost! Your paper loses to scissors. '
+            } else if (playerSelection == 'scissors' && computerSelection == 'rock') {
+                opponentScore++;
+                return 'You lost! Your scissors lose to rock.'
+            } else if (playerSelection == 'scissors' && computerSelection == 'paper') {
+                myScore++;
+                return 'You win! Your scissors beats paper.'
+            }
+        };
+
+        function game() {
+            // var numOfRounds = document.querySelector('#rounds').value;
+            var playerSelection = move;
+            var computerSelection = computerPlay();
+            document.getElementById('game-moves').innerHTML = playRound(playerSelection, computerSelection);
+            // console.log('Your move: ' + move)
+            // console.log('Opponent move: ' + computerSelection);
+            document.getElementById('my-score').innerHTML = 'Your score: ' + myScore;
+            document.getElementById('opponent-score').innerHTML = 'Opponent score: ' + opponentScore;
+
+            // removal of round logic below: 
+
+            // for (currentRound = 0; currentRound < numOfRounds; currentRound++) {
+            //     // var playerSelection = move;
+            //     // var playerSelection = prompt('your move bro');
+            //     var computerSelection = computerPlay();
+            //     console.log(playRound(playerSelection, computerSelection));
+            //     console.log('Opponent move: ' + computerSelection);
+            //     console.log('Your score: ' + myScore);
+            //     console.log('Opponent score: ' + opponentScore);
+            // };
+
+            if (myScore == 5 && opponentScore < 5) {
+                document.getElementById('game-winner').innerHTML = 'You win the game!';
+                document.getElementById('rock').disabled = true;
+                document.getElementById('paper').disabled = true;
+                document.getElementById('scissors').disabled = true;
+            } else if (opponentScore == 5 && myScore < 5) {
+                document.getElementById('game-winner').innerHTML = 'You lose the game!';
+                document.getElementById('rock').disabled = true;
+                document.getElementById('paper').disabled = true;
+                document.getElementById('scissors').disabled = true;
+            }
+        };
+    </script>
+</body>
+
 </html>
